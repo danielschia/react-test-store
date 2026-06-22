@@ -1,10 +1,11 @@
 import {useState} from 'react';
 
-export default function Item({props}) {
+export default function Item(props) {
 
     const [quantity, setQuantity] = useState(1);
     const [valueButton, setValueButton] = useState(true);
-    const product = props.product || {};
+    const produto = props.product || {};
+
 
     const minus =() => {
         (quantity -1) === 1 ? setValueButton(true) : setValueButton(false);
@@ -19,7 +20,7 @@ export default function Item({props}) {
     }
 
     const buyProduct = () => {
-        if (window.confirm(`Preço Final: R$ ${Math.round(product.price * quantity * 100) / 100}`)) {
+        if (window.confirm(`Preço Final: R$ ${Math.round(produto.price * quantity * 100) / 100}`)) {
             alert('Compra realizada com sucesso!');
             setQuantity(1);
         }
@@ -27,11 +28,11 @@ export default function Item({props}) {
 
     return (
         <article className="product">
-            <img src={product.image && product.image[0]} alt={product.title} />
+            <img src={produto.imagem} alt={produto.nome} />
             <h3 className="price-product">
-                R$ <span>{product.price}</span>
+                R$ <span>{produto.price}</span>
             </h3>
-            <p className="name-product">{product.title}</p>
+            <p className="name-product">{produto.nome}</p>
             <div className="quantity">
                 <span>Quantidade:</span>
                 <button disabled={valueButton} onClick={minus}>-</button>
@@ -42,4 +43,3 @@ export default function Item({props}) {
         </article>
     );
 }
-            

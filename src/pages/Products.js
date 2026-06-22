@@ -1,11 +1,18 @@
-import {UseState} from "react";
+import { useEffect, useState } from "react";
 import banner from "../assets/banner1.png";
 import Item from "../components/Item";
-import productList from "../products.json";
-
-const bottles = productList.bottles || [];
 
 export default function Products() {
+    const [productList, setProductList] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('http://localhost:5001/produtos');
+            const data = await response.json();
+            setProductList(data.produtos);
+        }
+        fetchData();
+    }, [])
     return (
         <div className="content-product">
             <header>
@@ -17,8 +24,8 @@ export default function Products() {
                 <img src={banner} alt="Banner" />
             </section>
             <section className="main-products">
-                {bottles.map((p, index) => (
-                    <Item props={{ product: p }} />
+                {productList.map((p, index) => (
+                    <Item key={index} product={p} />
                 ))}
             </section>
             <footer></footer>
